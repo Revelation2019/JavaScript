@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" id="demo">
+    <div id="xx">{{name}}</div>
+</body>
+</html>
+<script type="application/javascript">
+    let obj={};
+    Object.defineProperty(obj,"name",{
+        set:function (newValue) {
+            document.getElementById("xx").innerHTML=newValue;
+            document.getElementById("demo").value=newValue;
+        }
+    });
+    //当敲字时触发该方法，将所敲的字赋值给input和div
+    document.querySelector('#demo').oninput=function (e) {
+        obj.name=e.target.value;
+    }
+    //name是一个存取器属性，.name会执行set方法，set方法会将input和div的文本值设置为空
+    obj.name = '';
+</script>

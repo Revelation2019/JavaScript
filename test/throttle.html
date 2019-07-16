@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>节流</title>
+</head>
+<body>
+<button>说话</button>
+</body>
+</html>
+
+<script type="application/javascript">
+    document.getElementsByTagName("button")[0].addEventListener("click", debounce(say, 2000), false);
+
+    function say() {
+        console.log("我是一个按钮");
+    }
+
+    function throttle(fn, delay = 2000) {
+        let prev = Date.now();
+        console.log(prev);
+        return function () {
+            let now = Date.now();
+            console.log(now - prev);
+            if (now - prev >= delay) {
+                fn.call(this);
+                prev = now;//间隔时间应该是离上一次成功触发的间隔时间差
+            }
+        }
+    }
+    function debounce(fn,wait=2000) {
+        let timer=0;
+        return function () {
+            if(timer) clearTimeout(timer);
+            timer=setTimeout(function () {
+                fn.call(this);
+            },wait)
+        }
+    }
+</script>

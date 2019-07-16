@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script type="application/javascript">
+    //用get拦截实现一个生成各种DOM节点的通用dom
+    let dom=new Proxy({},{
+        get:function (target,property) {
+            return function (attributes={},...childNodes) {
+                const el=document.createElement(property);
+                for(let attrKey of Object.keys(attributes)){
+                    el.setAttribute(attrKey,attributes[attrKey]);
+                }
+                for(let child of childNodes){
+                    if(typeof child === "string"){
+                        child=document.createTextNode(child);
+                    }
+                    el.appendChild(child);
+                }
+                return el;
+            }
+        }
+    });
+    let el=dom.div({id:"mainDiv"},
+        "下面是mainDiv包含的子节点",
+        dom.a({href:"https://www.baidu.com"},"百度一下"),
+        dom.ul({},
+            dom.li({},"第一章"),
+            dom.li({},"第二章"),
+            dom.li({},"第三章"),
+            dom.li({},"第四章"))
+    );
+    document.body.appendChild(el);
+</script>
