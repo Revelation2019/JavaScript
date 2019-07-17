@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p></p>
+    <button>点击</button>
+</body>
+</html>
+
+<script>
+
+    const jsonp = function (url,callBack,success) {
+        let scriptNode = document.createElement("script");
+        scriptNode.url = url;
+        scriptNode.async = true;//设置为异步
+        scriptNode.type = "text/javascript";
+        window[callBack]=function (data) {
+            success && success(data);
+        };
+        document.body.appendChild(scriptNode);//最后要将script脚本节点插入到文档流中
+    };
+
+    let btnNode = document.querySelector("button");
+    console.log(btnNode);
+    btnNode.addEventListener("click",event=>{
+        console.log(event);
+        jsonp("https://127.0.0.1:8888","callBack",function (data) {
+        console.log(data);
+        document.querySelector("p").innerHTML+=data;
+    })},false);
+</script>

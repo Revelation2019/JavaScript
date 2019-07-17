@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .divNode{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: black;
+        }
+        .divParent{
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="divParent">
+        <div class="divNode"></div>
+    </div>
+</body>
+</html>
+
+<script>
+    let divNode = document.querySelectorAll("div")[1];
+    console.log(divNode);
+    divNode.addEventListener("click",event=>{console.log("冒泡");},false);
+    divNode.addEventListener("click",event=>{console.log("捕获");},true);
+    /**
+     * 输出结果是先打印冒泡在打印捕获
+     * 原因：当对一个元素节点注册冒泡和捕获事件时，事件的执行顺序按照注册事件的顺序执行，与先捕获再冒泡的原理无关。
+     */
+
+    let divParentNode = document.querySelectorAll("div")[0];
+    console.log(divParentNode);
+    divParentNode.addEventListener("click",event=>{event.stopImmediatePropagation();console.log("父节点捕获");},true);
+    divParentNode.addEventListener("click",event=>{console.log("父节点");},false);
+    divNode.addEventListener("click",event=>{event.stopPropagation();console.log("冒泡");},false);
+
+    /**
+     * stopPropagation方法会阻止事件向上冒泡
+     * stopImmediatePropagation方法会阻止其他所有的冒泡和捕获方法，仅仅执行本身注册方法。
+     */
+
+
+</script>
